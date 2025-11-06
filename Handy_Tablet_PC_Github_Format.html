@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DJI Mini 3 - Tutorial</title>
+<style>
+    * {margin:0;padding:0;box-sizing:border-box;}
+    body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#fff;color:#1d1d1f; line-height:1.6;overflow-x:hidden;}
+    h1,h2,h3,h4,p,ul,li {margin:0;padding:0;}
+    ul {list-style:none;}
+    .hero {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:linear-gradient(180deg,#fff 0%,#f5f5f7 100%); position:relative;}
+    .hero h1 {font-size:6rem; font-weight:700; letter-spacing:-0.05em; margin-bottom:20px; background:linear-gradient(135deg,#000 0%,#333 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:fadeIn 1.5s ease;}
+    .hero p {font-size:1.5rem; font-weight:300; color:#6e6e73; animation:fadeIn 2s ease;}
+    .scroll-indicator {position:absolute; bottom:50px; left:50%; transform:translateX(-50%); font-size:0.9rem; color:#6e6e73; animation:bounce 2s infinite;}
+    @keyframes fadeIn {from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes bounce {0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,10px);}}
+    .section {min-height:100vh; padding:100px 20px; display:flex; align-items:center; justify-content:center; border-top:1px solid #d2d2d7;}
+    .section:nth-child(even) {background:#f5f5f7;}
+    .container {max-width:1400px; width:100%; margin:0 auto;}
+    .split-layout {display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;}
+    .content-side h2 {font-size:3.5rem; font-weight:700; margin-bottom:30px; letter-spacing:-0.03em; color:#1d1d1f;}
+    .content-side h3 {font-size:1.8rem; font-weight:600; margin:40px 0 20px 0; color:#1d1d1f;}
+    .content-side p {font-size:1.2rem; color:#6e6e73; line-height:1.8; margin-bottom:20px;}
+    .content-side ul li {font-size:1.1rem; color:#6e6e73; padding:12px 0 12px 30px; position:relative;}
+    .content-side ul li:before {content:"→"; position:absolute; left:0; color:#000; font-weight:600;}
+    .video-side {position:sticky; top:100px; height:600px; background:#f5f5f7; border-radius:20px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.15); border:1px solid #d2d2d7; display:flex; align-items:center; justify-content:center; transition:all 0.3s ease;}
+    .video-side:hover {transform:scale(1.02); box-shadow:0 30px 80px rgba(0,0,0,0.2);}
+    .video-container {display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; width:100%; padding:18px; text-align:center;}
+    .video-container video {width:100%; height:calc(100% - 48px); object-fit:cover; border-radius:12px; display:block;}
+    .video-label {font-size:1rem; color:#6e6e73; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em; text-align:center;}
+    .video-placeholder {display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; padding:20px;}
+    .video-placeholder video {max-width:100%; height:auto; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.1);}
+    .video-placeholder::before,.video-placeholder::after {content:none;}
+    .checklist {background:#f5f5f7; border-radius:15px; padding:30px; margin:30px 0; border:1px solid #d2d2d7;}
+    .checklist-item {padding:15px; border-bottom:1px solid #d2d2d7; display:flex; align-items:center; transition:all 0.3s ease; cursor:pointer;}
+    .checklist-item:last-child {border-bottom:none;}
+    .checklist-item:hover {background:#e8e8ed;}
+    .checklist-item input[type="checkbox"] {width:22px; height:22px; margin-right:15px; accent-color:#000; cursor:pointer;}
+    .checklist-item label {font-size:1.05rem; color:#1d1d1f; cursor:pointer;}
+    .item-header {display:flex; align-items:center; justify-content:space-between; padding:10px 0; width:100%;}
+    .accordion-toggle {background:none; border:none; cursor:pointer; display:flex; align-items:center; padding:0;}
+    .accordion-content {display:none; padding:10px 0 15px 25px; width:100%;}
+    .accordion-content img, .accordion-content video {max-width:100%; border-radius:8px; display:block; margin:10px auto;}
+    .arrow {transition:transform 0.3s ease; transform-origin:center;}
+    .checklist-item.active .arrow {transform:rotate(90deg);}
+    .button-demo {background:rgba(0,0,0,0.03); border-radius:15px; padding:20px; border:1px solid #d2d2d7; width:100%;}
+    .button-grid {display:grid; gap:20px; width:100%;}
+    .button-item {background:#fff; padding:15px; border-radius:12px; border:1px solid #d2d2d7; transition:all 0.3s ease; cursor:pointer;}
+    .button-item:hover {background:#f5f5f7; transform:translateY(-2px);}
+    .button-name {font-weight:600; margin-bottom:5px;}
+    .button-desc {font-size:0.95rem; color:#6e6e73;}
+    .warning-box {background:rgba(0,0,0,0.03); border-left:4px solid #000; padding:30px; margin:40px 0; border-radius:10px;}
+    .warning-box h4 {font-size:1.3rem; margin-bottom:15px; color:#1d1d1f;}
+    .step-bg-gray {background-color:#f5f5f5; padding:60px 0; border-radius:0;}
+    @media(max-width:1024px){.split-layout{grid-template-columns:1fr; gap:40px;}.video-side{position:relative;top:0;height:420px;}.hero h1{font-size:3.5rem;}.content-side h2{font-size:2.5rem;}}
+    @media(max-width:768px){.hero h1{font-size:2.5rem;}.hero p{font-size:1.2rem;}.content-side h2{font-size:2rem;}.button-grid{grid-template-columns:1fr;}.video-side{height:300px;}.video-container video{height:calc(100% - 40px);}}
+</style>
+</head>
+
+<body>
+    <div class="hero">
+        <h1>DJI Mini 3</h1>
+        <p>Beginner Guide: Erste Schritte mit deiner DJI Mini 3.</p>
+        <div class="scroll-indicator">↓ Scroll</div>
+    </div>
+
+   <section class="section">
+    <div class="container">
+        <div class="split-layout">
+            <div class="content-side">
+                <span class="step-number">Schritt 01</span>
+                <h2>Auspacken</h2>
+                <p>Nimm dir Zeit, jedes Teil sorgfältig zu überprüfen. Es ist wichtig, dass du alle Teile vor deinem ersten Flug besitzt.</p>
+                
+                <div class="checklist">
+
+                    <!-- DJI Mini 3 Drohne -->
+                    <div class="checklist-item">
+                        <div class="item-header">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <input type="checkbox" id="item1">
+                                <label for="item1">DJI Mini 3 Drohne</label>
+                            </div>
+                            <button class="accordion-toggle">
+                                <svg class="arrow" viewBox="0 0 24 24" width="18" height="18">
+                                    <path d="M8 5l8 7-8 7" stroke="#555" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="accordion-content">
+                            <img src="Foto_Drohne.jpeg" alt="DJI Mini 3 Drohne">
+                        </div>
+                        <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Entferne doppelte Listener-Möglichkeiten: füge nur einmal hinzu
+    document.querySelectorAll('.accordion-toggle').forEach(button => {
+        button.addEventListener('click', (e) => {
+            // optional: e.preventDefault();
+            const item = button.closest('.checklist-item');
+            if(!item) return;
+            item.classList.toggle('active');
+            const content = item.querySelector('.accordion-content');
+            if(!content) return;
+            content.style.display = item.classList.contains('active') ? 'block' : 'none';
+        });
+    });
+});
+</script>
+                    </div>
+
+                    <!-- Fernsteuerung -->
+                    <div class="checklist-item">
+                        <div class="item-header">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <input type="checkbox" id="item2">
+                                <label for="item2">DJI RC Fernsteuerung</label>
+                            </div>
+                            <button class="accordion-toggle">
+                                <svg class="arrow" viewBox="0 0 24 24" width="18" height="18">
+                                    <path d="M8 5l8 7-8 7" stroke="#555" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="accordion-content">
+                            <img src="Foto_Fernbedienung.jpeg" alt="Fernsteuerung">
+                        </div>
+                    </div>
+
+                    <!-- Intelligent Flight Battery -->
+                    <div class="checklist-item">
+                        <div class="item-header">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <input type="checkbox" id="item3">
+                                <label for="item3">Intelligent Flight Battery</label>
+                            </div>
+                            <button class="accordion-toggle">
+                                <svg class="arrow" viewBox="0 0 24 24" width="18" height="18">
+                                    <path d="M8 5l8 7-8 7" stroke="#555" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="accordion-content">
+                            <img src="Foto_Akku.jpeg" alt="Intelligent Flight Batterie">
+                        </div>
+                    </div>
+
+                    <!-- Batterie Ladestation -->
+                    <div class="checklist-item">
+                        <div class="item-header">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <input type="checkbox" id="item4">
+                                <label for="item4">Batterie-Ladestation</label>
+                            </div>
+                            <button class="accordion-toggle">
+                                <svg class="arrow" viewBox="0 0 24 24" width="18" height="18">
+                                    <path d="M8 5l8 7-8 7" stroke="#555" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="accordion-content">
+                            <img src="Foto_Ladestation.jpeg" alt="Ladestation der Intelligent Flight Batterie">
+                        </div>
+                    </div>
+
+                    <!-- Propeller -->
+                    <div class="checklist-item">
+                        <div class="item-header">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <input type="checkbox" id="item5">
+                                <label for="item5">4 Ersatzpropeller</label>
+                            </div>
+                            <button class="accordion-toggle">
+                                <svg class="arrow" viewBox="0 0 24 24" width="18" height="18">
+                                    <path d="M8 5l8 7-8 7" stroke="#555" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="accordion-content">
+                            <img src="Foto_Ersatzpropeller.jpeg" alt="Propeller">
+                        </div>
+                    </div>
+
+                    <!-- USB-C Ladekabel -->
+                    <div class="checklist-item">
+                        <div class="item-header">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <input type="checkbox" id="item6">
+                                <label for="item6">USB-C Ladekabel</label>
+                            </div>
+                            <button class="accordion-toggle">
+                                <svg class="arrow" viewBox="0 0 24 24" width="18" height="18">
+                                    <path d="M8 5l8 7-8 7" stroke="#555" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="accordion-content">
+                            <img src="Foto_Ladekabel.jpeg" alt="USB-C Ladekabel">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="warning-box">
+                    <h4>Wichtig</h4>
+                    <p>Überprüfe alle Komponenten auf Transportschäden. Bei Beschädigungen kontaktiere umgehend den Support, um deine Garantie für eine Ersetzung der Teile nutzen zu können.</p>
+                </div>
+            </div>
+
+            <!-- Hier ist das aktualisierte Video-Kästchen -->
+            <div class="video-side">
+                <div class="video-container">
+                    <span class="video-label"><b>Video zum Auspacken der verschiedenen Einzelteile</b></span>
+                    <video controls>
+                        <source src="Video_Auspacken_von_Drohne.mp4" type="video/mp4">
+                        Dein Browser unterstützt das Video-Tag nicht.
+                    </video>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    // Accordion Funktionalität (einmalig)
+    document.querySelectorAll('.accordion-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const item = button.closest('.checklist-item');
+            item.classList.toggle('active');
+            const content = item.querySelector('.accordion-content');
+            if(item.classList.contains('active')) {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<section class="section">
+    <div class="container">
+        <div class="split-layout">
+
+            <!-- Video-Seite -->
+            <div class="video-side">
+                <div class="video-placeholder">
+                    <span class="video-label">Video: Wie lädst du eigentlich deine Drohne?</span>
+                    <video width="100%" height="auto" controls>
+                        <source src="Video_wie_lädt_man_die_drohne.mp4" type="video/mp4">
+                        Dein Browser unterstützt das Video-Tag nicht.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Text-Seite -->
+            <div class="content-side">
+                <span class="step-number">Schritt 02</span>
+                <h2>Akku laden</h2>
+                <p>Ein vollständig geladener Akku ist die Grundlage für deinen ersten Flug.</p>
+                
+                <h3>Ladevorgang</h3>
+                <ul>
+                    <li>Setze den Akku in die Drohne ein</li>
+                    <li>Verbinde das USB-C Kabel mit der Drohne</li>
+                    <li>Ladezeit: circa 90 Minuten</li>
+                    <li>LED-Anzeige informiert über den Status</li>
+                    <li>Verbinde das USB-C Kabel mit deiner Fernsteuerung nachdem die Drohne vollständig geladen ist.</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Pro Tipp</h4>
+                    <p>Lade die Fernsteuerung parallel zu deiner Drohne, falls du noch ein zweites USB-C Ladekabel besitzt. So bist du für Schritt 3 bereit, wenn beide Akkus geladen sind und ersparst dir eine Menge Zeit.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+/* Video-Sektion anpassen */
+.video-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+}
+
+/* Video-Label */
+.video-label {
+    font-size: 1rem;
+    color: #6e6e73;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Video selbst */
+.video-placeholder video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Kreis und Play-Symbol entfernen */
+.video-placeholder::before,
+.video-placeholder::after {
+    content: none;
+}
+</style>
+
+<section class="section">
+    <div class="container">
+        <div class="split-layout" style="display: flex; gap: 20px;">
+            <div class="content-side" style="flex: 1;">
+                <span class="step-number">Schritt 03</span>
+                <h2>DJI Fly App</h2>
+                <p>Die App ist dein Cockpit. Von hier aus kontrollierst du jeden Aspekt deines Flugs.</p>
+                
+                <h3>Installation</h3>
+                <ul>
+                    <li>App Store (iOS) oder Google Play (Android)</li>
+                    <li>Suche nach "DJI Fly"</li>
+                    <li>Erstelle ein DJI Konto</li>
+                    <li>Firmware-Updates herunterladen</li>
+                    <li>Alternativ hast du bei der DJI Mini 3 Drohne die RC Fernbedienung dabei, welche einen eingebauten Bildschirm besitzt. Auf diesem ist die DJI Fly App schon vorinstalliert.</li>
+                </ul>
+
+                <h3>Erste Einrichtung</h3>
+                <ul>
+                    <li>Aktiviere die App mit deinem Konto</li>
+                    <li>Akzeptiere notwendige Berechtigungen</li>
+                    <li>Verbinde später mit der Drohne</li>
+                </ul>
+            </div>
+            <div class="video-side-wrapper" style="flex: 0 0 300px; display: flex; flex-direction: column; align-items: center;">
+                <!-- Mittig über dem Video-Kasten mit spezieller Schriftart -->
+                <h3 style="margin-bottom: 1cm; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                    Wie downloadet man die DJI Fly App?
+                </h3>
+                <div class="video-side" style="width: 100%; height: 500px; display: flex; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 8px;">
+                    <video controls style="width: 100%; height: 100%; object-fit: contain; border-radius: 4px;">
+                        <source src="Video_wie_installiere_ich_die_DJI_Fly_App.mp4" type="video/mp4">
+                        Dein Browser unterstützt das Video-Tag nicht.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+
+.step-bg-gray {
+    background-color: #ffffff; 
+    padding: 60px 0; 
+    border-radius: 0; 
+}
+</style>
+
+<section class="section">
+    <div class="container">
+        <div class="split-layout">
+            
+            <!-- Video-Seite -->
+            <div class="video-side">
+                <div class="video-container">
+                    <span class="video-label"><b>Video: Propeller montieren</b></span>
+                    <video controls>
+                        <source src="Video_wie_öffnet_man_drohne_vor_start.mp4" type="video/mp4">
+                        Dein Browser unterstützt das Video-Tag nicht.
+                    </video>
+                </div>
+            </div>
+
+
+            <!-- Text-Seite -->
+            <div class="content-side">
+                <span class="step-number">Schritt 04</span>
+                <h2>Drohne vorbereiten</h2>
+                <p>Präzision ist der Schlüssel. Jeder Handgriff zählt.</p>
+                
+                <h3>Propeller montieren</h3>
+                <ul>
+                    <li>Achte auf die Markierungen (mit/ohne Ring)</li>
+                    <li>Drücke den Propeller auf den Motor</li>
+                    <li>Drehe bis zum Einrasten</li>
+                    <li>Überprüfe festen Sitz aller Propeller</li>
+                </ul>
+
+                <h3>Arme ausklappen</h3>
+                <ul>
+                    <li>Zuerst die hinteren Arme</li>
+                    <li>Dann die vorderen Arme</li>
+                    <li>Vollständiges Ausklappen sicherstellen</li>
+                    <li>Gimbal-Schutz entfernen</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+/* Video-Kasten identisch zum Auspacken-Video */
+.video-side {
+    position: sticky;
+    top: 100px;
+    height: 600px;
+    background: #f5f5f7;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    border: 1px solid #d2d2d7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.video-side:hover {
+    transform: scale(1.02);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+}
+
+.video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 18px;
+    text-align: center;
+}
+
+.video-label {
+    font-size: 1rem;
+    color: #6e6e73;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Video füllt den Kasten */
+.video-container video {
+    width: 100%;
+    height: calc(100% - 48px); /* Platz für Label / padding */
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+}
+
+/* Kreis und Play-Symbol entfernen, falls vorhanden */
+.video-placeholder::before,
+.video-placeholder::after {
+    content: none;
+}
+</style>
+
+
+
+
+<style>
+/* Checkliste & Accordion Styles */
+.checklist-item {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+
+.item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.item-header input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.accordion-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.accordion-content {
+    display: none;
+    padding: 10px 0 15px 25px;
+}
+
+.accordion-content img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.arrow {
+    transition: transform 0.3s ease;
+    transform-origin: center;
+}
+
+/* Pfeil dreht sich bei geöffnetem Accordion */
+.checklist-item.active .arrow {
+    transform: rotate(90deg);
+}
+</style>
+
+<script>
+document.querySelectorAll('.accordion-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+        const item = button.closest('.checklist-item');
+        item.classList.toggle('active');
+        const content = item.querySelector('.accordion-content');
+        if(item.classList.contains('active')) {
+            content.style.display = 'block';
+        } else {
+            content.style.display = 'none';
+        }
+    });
+});
+</script>
+</style>
+
+<section class="section step-bg-gray">
+    <div class="container">
+        <div class="content-side">
+            <span class="step-number">Schritt 05</span>
+            <h2>Fernsteuerung</h2>
+            <p>Die Verbindung zwischen dir und deiner Drohne.</p>
+
+            <!-- Wichtige Tasten Kasten -->
+            <div class="button-demo" style="width: 100%;">
+                <h3 style="margin-top: 0;">Wichtige Tasten</h3>
+
+                <div class="button-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+
+                    <!-- Einzelner Button mit eigenem Accordion -->
+                    <div class="button-item">
+                        <div class="item-header" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                            <div>
+                                <div class="button-name">Power Button</div>
+                                <div class="button-desc">Einmal kurz, dann lang drücken zum Einschalten</div>
+                            </div>
+                        </div>
+                        <div class="accordion-content" style="display:none; margin-top:10px;">
+                            <video controls style="width:100%; border-radius:12px;">
+                                <source src="Video_Power_Button.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+
+                    <div class="button-item">
+                        <div class="item-header" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                            <div>
+                                <div class="button-name">RTH Button</div>
+                                <div class="button-desc">Return to Home - Automatische Rückkehr (lange Drücken)</div>
+                            </div>
+                        </div>
+                        <div class="accordion-content" style="display:none; margin-top:10px;">
+                            <img src="Foto_RTH-Pause_Button.jpeg" alt="RTH Button" style="width:100%; border-radius:12px; margin-bottom:10px;">
+                        </div>
+                    </div>
+
+                    <div class="button-item">
+                        <div class="item-header" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                            <div>
+                                <div class="button-name">Pause Button</div>
+                                <div class="button-desc">Stoppt alle Bewegungen sofort (kurz Drücken)</div>
+                            </div>
+                        </div>
+                        <div class="accordion-content" style="display:none; margin-top:10px;">
+                            <img src="Foto_RTH-Pause_Button.jpeg" alt="Pause Button" style="width:100%; border-radius:12px; margin-bottom:10px;">
+                        </div>
+                    </div>
+
+                    <div class="button-item">
+                        <div class="item-header" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                            <div>
+                                <div class="button-name">Gimbal Wheel</div>
+                                <div class="button-desc">Kamera nach oben/unten neigen (Auf der Rückseite)</div>
+                            </div>
+                        </div>
+                        <div class="accordion-content" style="display:none; margin-top:10px;">
+                            <img src="Foto_Gimbal_Wheel.jpeg" alt="Gimbal Wheel" style="width:100%; border-radius:12px; margin-bottom:10px;">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h3>Verbindung herstellen</h3>
+            <ul>
+                <li>Drohne einschalten</li>
+                <li>Fernsteuerung einschalten</li>
+                <li>Smartphone verbinden</li>
+                <li>DJI Fly App öffnen</li>
+                <li>Aktivierung durchführen</li>
+                <li>Die Punkte 3, 4 und 5 müssen nur gemacht werden, falls man nicht die DJI RC Fernbedienung besitzt.</li>
+                <li>Wenn man die RC Fernbedienung besitzt, muss du sie nur anschalten, um dich mit der Drohne zu verbinden.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+<style>
+.step-bg-gray {
+    background-color: #f5f5f7;
+    padding: 60px 0;
+    border-radius: 0;
+}
+</style>
+
+<script>
+    // Accordion Funktion für jeden Button einzeln
+    document.querySelectorAll('.button-item').forEach(item => {
+        const toggle = item.querySelector('.accordion-toggle');
+        const content = item.querySelector('.accordion-content');
+        if(toggle) {
+            toggle.addEventListener('click', () => {
+                const isOpen = content.style.display === 'block';
+                content.style.display = isOpen ? 'none' : 'block';
+                toggle.innerHTML = isOpen ? '&#9654;' : '&#9660;';
+            });
+        }
+    });
+</script>
+
+<style>
+.step-bg-gray {
+    background-color: #f5f5f7;
+    padding: 60px 0;
+    border-radius: 0;
+}
+</style>
+
+<section class="section kalibrierung-section">
+  <div class="kalibrierung-container">
+    <div class="kalibrierung-split-layout">
+
+      <!-- Linke Seite: Haupttext -->
+      <div class="kalibrierung-content-side">
+        <span class="kalibrierung-step-number">Schritt 06</span>
+        <h2 class="kalibrierung-heading">Kalibrierung</h2>
+        <p>Präzise Sensoren sind die Grundlage für sicheres Fliegen.</p>
+
+        <h3>Kompass kalibrieren</h3>
+        <ul>
+          <li>In den App-Einstellungen "Kompass kalibrieren" wählen</li>
+          <li>Drohne horizontal 360° drehen</li>
+          <li>Drohne vertikal 360° drehen (Nase nach unten)</li>
+          <li>Auf Bestätigung warten</li>
+        </ul>
+      </div>
+
+      <!-- Rechte Seite: grauer Infokasten -->
+      <div class="kalibrierung-info-side">
+        <div class="kalibrierung-info-box">
+          <h4>Wann kalibrieren?</h4>
+          <p>Beim ersten Flug, nach längerer Lagerung oder bei neuem Standort. 
+             Die App fordert dich auf, wenn nötig.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+/* ===============================
+   Kalibrierung – einheitlicher Stil
+   =============================== */
+
+.kalibrierung-section {
+  padding: 60px 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #1d1d1f;
+  line-height: 1.7;
+  background: #fff;
+}
+
+.kalibrierung-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.kalibrierung-split-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+/* ===== Linke Seite ===== */
+.kalibrierung-content-side {
+  flex: 2;
+  min-width: 320px;
+  position: relative;
+  left: -20px; /* 🔥 Verschiebt die Überschrift & Textblock nach links */
+}
+
+.kalibrierung-step-number {
+  display: block;
+  font-weight: 700;
+  color: #7f8486;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+
+}
+
+.kalibrierung-content-side h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #1d1d1f;
+  letter-spacing: -0.02em;
+}
+
+.kalibrierung-content-side h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 40px 0 20px;
+  color: #1d1d1f;
+}
+
+.kalibrierung-content-side p {
+  font-size: 1.1rem;
+  color: #6e6e73;
+  line-height: 1.8;
+  margin-bottom: 20px;
+   letter-spacing: 0.05em;
+}
+
+.kalibrierung-content-side ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 20px 0;
+}
+
+.kalibrierung-content-side li {
+  font-size: 1.05rem;
+  color: #6e6e73;
+  padding: 10px 0 10px 28px;
+  position: relative;
+}
+
+.kalibrierung-content-side li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #000;
+  font-weight: 600;
+}
+
+/* ===== Rechte Seite: Infokasten ===== */
+.kalibrierung-info-side {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.kalibrierung-info-box {
+  background: #f5f5f7;
+  border-left: 4px solid #6e6e73;
+  border-radius: 10px;
+  padding: 25px 30px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  width: 100%;
+}
+
+.kalibrierung-info-box h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1d1d1f;
+}
+
+.kalibrierung-info-box p {
+  font-size: 1rem;
+  color: #6e6e73;
+  margin: 0;
+   letter-spacing: 0.05em;
+}
+
+/* ===== Responsive Ansicht ===== */
+@media (max-width: 768px) {
+  .kalibrierung-split-layout {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .kalibrierung-content-side {
+    left: 0; /* mobile: keine Verschiebung nötig */
+  }
+
+  .kalibrierung-content-side h2 {
+    font-size: 2.2rem;
+  }
+
+  .kalibrierung-content-side h3 {
+    font-size: 1.4rem;
+  }
+
+  .kalibrierung-info-box {
+    padding: 20px;
+  }
+}
+</style>
+    <section class="section">
+  <div class="container">
+    <div class="split-layout">
+
+      <!-- Textseite -->
+      <div class="content-side">
+        <span class="step-number">Schritt 07</span>
+        <h2>Pre-Flight Check</h2>
+        <p>Sicherheit steht an erster Stelle. Jeden. Einzelnen. Flug.</p>
+
+        <div class="checklist">
+          <div class="checklist-item">
+            <input type="checkbox" id="check1">
+            <label for="check1">Akku vollständig geladen</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="check2">
+            <label for="check2">Propeller fest und unbeschädigt</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="check3">
+            <label for="check3">Gimbal frei beweglich</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="check4">
+            <label for="check4">GPS-Signal stark (10+ Satelliten)</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="check5">
+            <label for="check5">Umgebung sicher</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="check6">
+            <label for="check6">Wetter geeignet</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="check7">
+            <label for="check7">Return-to-Home Point gesetzt</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video-/Kasten-Seite (Pre-Flight Check) -->
+      <div class="video-side">
+        <div class="video-container">
+          <span class="video-label">Video: Pre-Flight Routine</span>
+          <video controls>
+            <source src="Video_Pre_Flight_Check.mp4" type="video/mp4">
+            Dein Browser unterstützt das Video-Tag nicht.
+          </video>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+/* Gleiche Video-Kasten Eigenschaften wie bei Schritt 2 */
+.video-side {
+  position: sticky;
+  top: 100px;
+  height: 600px; /* gleiche Höhe wie bestehende Video-Kästen */
+  background: #f5f5f7;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 1px solid #d2d2d7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.video-side:hover {
+  transform: scale(1.02);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+}
+
+.video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.video-label {
+  font-size: 1rem;
+  color: #6e6e73;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.video-container video {
+  width: 100%;
+  height: calc(100% - 40px); /* Label + Padding berücksichtigen */
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+</style>
+
+<section class="section">
+    <div class="container">
+        <div class="content-side" style="width:100%;">
+            <span class="step-number">Schritt 08</span>
+            <h2>Erster Flug</h2>
+            <p>Der Moment ist gekommen. Ruhig bleiben. Konzentriert bleiben.</p>
+            <ul><li>🛈     Du siehst durch klicken auf die Kästen ein Video,welches du groß machen kannst falls du eine Erläuterung der Manöver brauchst. </li></ul>
+            
+            <div class="button-demo" style="width:100%;">
+                <h3 style="margin-top:0;">Steuerung</h3>
+                <div class="button-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px;">
+                    
+                    <!-- Button 1 -->
+                    <div class="button-item" style="cursor:pointer;">
+                        <div class="button-name">Linker Stick ↑↓</div>
+                        <div class="button-desc">Hoch/Runter (Throttle)</div>
+                        <div class="accordion-content" style="display:none; margin-top:10px;">
+                            <video controls style="width:100%; border-radius:12px;" controlsList="fullscreen">
+                                <source src=" Lückenfüller " type="video/mp4">
+                                Dein Browser unterstützt das Video-Tag nicht.
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- Button 2 -->
+                    <div class="button-item" style="cursor:pointer;">
+                        <div class="button-name">Linker Stick ←→</div>
+                        <div class="button-desc">Rotation (Yaw)</div>
+                        <div class="accordion-content" style="display:none; margin-top:10px;">
+                            <video controls style="width:100%; border-radius:12px;" controlsList="fullscreen">
+                                <source src="   Lückenfüller   " type="video/mp4">
+                                Dein Browser unterstützt das Video-Tag nicht.
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- Button 3 -->
+                    <div class="button-item" style="cursor:pointer;">
+                        <div class="button-name">Rechter Stick ↑↓</div>
+                        <div class="button-desc">Vorwärts/Rückwärts</div>
+                        <div class="accordion-content" style="display:none; margin-top:10px;">
+                            <video controls style="width:100%; border-radius:12px;" controlsList="fullscreen">
+                                <source src="   Lückenfüller   " type="video/mp4">
+                                Dein Browser unterstützt das Video-Tag nicht.
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- Button 4 -->
+                    <div class="button-item" style="cursor:pointer;">
+                        <div class="button-name">Rechter Stick ←→</div>
+                        <div class="button-desc">Links/Rechts</div>
+                        <div class="accordion-content" style="display:none; margin-top:10px;">
+                            <video controls style="width:100%; border-radius:12px;" controlsList="fullscreen">
+                                <source src="   Lückenfüller   " type="video/mp4">
+                                Dein Browser unterstützt das Video-Tag nicht.
+                            </video>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h3>Start</h3>
+            <ul>
+                <li>Beide Sticks nach innen-unten ziehen</li>
+                <li>Oder: Start-Button in der App</li>
+                <li>Linken Stick sanft nach oben</li>
+                <li>In niedriger Höhe eingewöhnen</li>
+            </ul>
+
+            <div class="warning-box">
+                <h4>Anfänger-Tipp</h4>
+                <p>Halte die Drohne zunächst in 1-2 Meter Höhe. Übe sanfte Bewegungen. Hektik ist der größte Feind.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Accordion-Funktion für alle Button-Items
+    document.querySelectorAll('.button-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const content = item.querySelector('.accordion-content');
+            const isOpen = content.style.display === 'block';
+            content.style.display = isOpen ? 'none' : 'block';
+        });
+    });
+</script>
+
+<style>
+.button-demo {
+    background: rgba(0,0,0,0.03);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid #d2d2d7;
+    width: 100%;
+}
+.button-grid {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+}
+.button-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #d2d2d7;
+    transition: all 0.3s ease;
+}
+.button-item:hover {
+    background: #f5f5f7;
+    transform: translateY(-2px);
+}
+.button-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.button-desc {
+    font-size: 0.95rem;
+    color: #6e6e73;
+}
+.accordion-content video {
+    margin-top: 10px;
+}
+</style>
+
+<style>
+
+.step-bg-gray {
+    background-color: #ffffff; 
+    padding: 60px 0; 
+    border-radius: 0; 
+}
+</style>
+
+<section class="section">
+    <div class="container">
+        <div class="split-layout">
+
+            <!-- Linke Seite: Text -->
+            <div class="content-side">
+                <span class="step-number">Schritt 09</span>
+                <h2>Landen</h2>
+                <p>Ein guter Pilot zeichnet sich durch sichere Landungen aus.</p>
+                
+                <h3>Sicher landen</h3>
+                <ul>
+                    <li>Zurück zum Startpunkt fliegen</li>
+                    <li>Höhe langsam reduzieren</li>
+                    <li>Sanft aufsetzen lassen</li>
+                    <li>Linken Stick ganz nach unten</li>
+                    <li>Motoren stoppen</li>
+                </ul>
+
+                <h3>Nach dem Flug</h3>
+                <ul>
+                    <li>Erst Drohne, dann Fernsteuerung ausschalten</li>
+                    <li>Akku entnehmen bei Nichtgebrauch</li>
+                    <li>Arme einklappen</li>
+                    <li>Sicher verstauen</li>
+                    <li>Am besten Besitzt du eine Hardschalen Box damit die Drohne bei der Lagerung auch wirklich nicht beschädigt werden kann.</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Notfall</h4>
+                    <p>Bei Orientierungsverlust: RTH-Button drücken. Die Drohne kehrt automatisch zurück.</p>
+                </div>
+            </div>
+
+            <!-- Rechte Seite: Video-Kasten -->
+            <div class="video-side">
+                <div class="video-container">
+                    <span class="video-label"><b> Landung & Verstauung</b></span>
+                    <video controls>
+                        <source src="    Lückenfüller   " type="video/mp4">
+                        Dein Browser unterstützt das Video-Tag nicht.
+                    </video>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+/* Video-Kasten wie bei Schritt 02 / Schritt 07 */
+.video-side {
+  flex: 1;
+  background: #f5f5f7;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 1px solid #d2d2d7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 600px; /* gleiche Höhe wie andere Video-Kästen */
+  padding: 20px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.video-side:hover {
+  transform: scale(1.02);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+}
+
+.video-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-label {
+  font-size: 1rem;
+  color: #6e6e73;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.video-container video {
+  width: 100%;
+  height: calc(100% - 40px); /* Label + Padding berücksichtigen */
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+</style>
+
+<style>
+
+.step-bg-gray {
+    background-color: #f5f5f7; 
+    padding: 60px 0; 
+    border-radius: 0; 
+}
+</style>
+
+    <section class="section" style="min-height: 70vh;">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 4rem; margin-bottom: 30px; color: #1d1d1f;">Das ist erst der Anfang.</h2>
+            <p style="font-size: 1.5rem; color: #6e6e73; max-width: 800px; margin: 0 auto;">
+                Jetzt kennst du die Grundlagen. Die wahre Kunst des Fliegens lernst du mit jeder Minute in der Luft.
+            </p>
+            <p style="font-size: 1.2rem; color: #6e6e73; margin-top: 40px;">
+                Fliege sicher. Fliege verantwortungsvoll.
+            </p>
+        </div>
+    </section>
+
+<style>
+
+.step-bg-gray {
+    background-color: #f5f5f7; 
+    padding: 60px 0; 
+    border-radius: 0; 
+}
+</style>
+
+
+
+</body>
+</html>
